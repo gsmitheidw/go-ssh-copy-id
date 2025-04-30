@@ -35,10 +35,10 @@ func main() {
 		return
 	}
 
-	// Positional argument: user@host[:port]
+	// no input
 	args := flag.Args()
 	if len(args) < 1 {
-		fmt.Println("Usage: go-ssh-copy-id user@host[:port] [-i=/path/to/key.pub] [-p=22]")
+		fmt.Println("Usage: go-ssh-copy-id user@host[:port] [-i=\\path\\to\\key.pub] [-p=22]")
 		os.Exit(1)
 	}
 
@@ -54,7 +54,7 @@ func main() {
 		port = *portFlag
 	}
 
-	// get key
+	// get key from ~ 
 	finalKeyPath := *keyPath
 	if finalKeyPath == "" {
 		home, err := os.UserHomeDir()
@@ -96,7 +96,7 @@ func main() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	fmt.Println("Sending public key via single SSH session...")
+	fmt.Println("Sending public key via single ssh session...")
 	if err := cmd.Run(); err != nil {
 		fmt.Println("SSH command failed:", err)
 		os.Exit(1)
@@ -111,7 +111,7 @@ func fileExists(path string) bool {
 	return err == nil
 }
 
-// Splits user@host[:port] into user@host and port
+// splits user@host[:port] into user@host and port
 func splitHostPort(input string) (string, int) {
 	parts := strings.Split(input, ":")
 	if len(parts) == 2 {
@@ -130,7 +130,7 @@ func showVersion() {
 
  
 func showHelp() {
-	fmt.Println("Usage: go-ssh-copy-id user@host[:port] [-i=/path/to/key.pub] [-p=22]")
+	fmt.Println("Usage: go-ssh-copy-id user@host[:port] [-i=\\path\\to\\key.pub] [-p=22]")
 	fmt.Println()
 	fmt.Println("Options:")
 	fmt.Println("  -i      Path to your public SSH key (optional)")

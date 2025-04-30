@@ -1,1 +1,1 @@
-go build -o sshcopyid.exe -ldflags="-s -w" main.go
+go build -o go-ssh-copy-id.exe -ldflags="-s -w" main.go
