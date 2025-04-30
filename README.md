@@ -20,21 +20,21 @@ Options:
 
 ```mermaid
  graph TD
-    A[fa:fa-terminal go-ssh-copy-id] --> B{fa:fa-key Check for ed25519 key}
-    B -->|Yes| C[fa:fa-file Read ed25519 key]
-    B -->|No| D{fa:fa-key Check for rsa key}
-    D -->|Yes| E[fa:fa-file Read rsa key]
-    D -->|No| F[fa:fa-exclamation-triangle Show error and exit]
-    C --> G[fa:fa-broom Clean key data]
+    A[🚀 go-ssh-copy-id] --> B{🔑 Check for ed25519 key}
+    B -->|Yes| C[📄 Read ed25519 key]
+    B -->|No| D{🔑 Check for rsa key}
+    D -->|Yes| E[📄 Read rsa key]
+    D -->|No| F[❌ Show error and exit]
+    C --> G[🧹 Clean key data]
     E --> G
-    G --> H[fa:fa-cogs Prepare SSH command]
-    H --> I[fa:fa-network-wired Execute SSH command]
-    I --> J{fa:fa-check SSH command successful?}
-    J -->|Yes| K[fa:fa-thumbs-up Show success message]
-    J -->|No| L[fa:fa-thumbs-down Show error message]
-    K --> M[fa:fa-flag-checkered End]
+    G --> H[⚙️ Prepare SSH command]
+    H --> I[🌐 Execute SSH command]
+    I --> J{✅ SSH command successful?}
+    J -->|Yes| K[👍 Show success message]
+    J -->|No| L[👎 Show error message]
+    K --> M[🏁 End]
     L --> M
-    I --> N[fa:fa-server Append key to authorized_keys]
+    I --> N[💻 Append key to authorized_keys]
     N --> M 
 ```
 
