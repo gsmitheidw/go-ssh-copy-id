@@ -38,3 +38,7 @@ Options:
     N --> M 
 ```
 
+## Notes & Limitations
+
+* Doesn't check for duplicate keys
+* Assumes remote hosts are unix/linux and conform to standard path for authorized_keys file
