@@ -20,18 +20,18 @@ Options:
 
 ```mermaid
  graph TD
-    A[🚀 go-ssh-copy-id] --> B{🔑 Check for ed25519 key}
+    A[🚪go-ssh-copy-id] --> B{🔑 Check for ed25519 key}
     B -->|Yes| C[📄 Read ed25519 key]
     B -->|No| D{🔑 Check for rsa key}
     D -->|Yes| E[📄 Read rsa key]
-    D -->|No| F[❌ Show error and exit]
+    D -->|No| F[❌ Error & exit]
     C --> G[🧹 Clean key data]
     E --> G
     G --> H[⚙️ Prepare SSH command]
     H --> I[🌐 Execute SSH command]
     I --> J{✅ SSH command successful?}
-    J -->|Yes| K[👍 Show success message]
-    J -->|No| L[👎 Show error message]
+    J -->|Yes| K[👍 OK ]
+    J -->|No| L[👎 Error & exit]
     K --> M[🏁 End]
     L --> M
     I --> N[💻 Append key to authorized_keys]
