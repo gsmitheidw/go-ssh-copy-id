@@ -4,6 +4,9 @@ go-ssh-copy-id is an implementation of ssh-copy-id for Windows.
 It is a static binary with no dependencies other than native ssh client
 that already is in modern Windows.
 
+An Apple OSX build has been added (because golang makes it trivial to
+add another build).
+
 ## Usage
 
 ```
