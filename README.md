@@ -37,7 +37,7 @@ Options:
     J -->|No| L[👎 Error & exit]
     K --> M[🏁 End]
     L --> M
-    I --> N[💻 Append key to authorized_keys]
+    I --> |🗝 Check for Duplicate Key| N[💻 Append key to authorized_keys]
     N --> M 
 ```
 
