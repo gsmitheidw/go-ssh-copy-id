@@ -10,7 +10,7 @@ clean:
     if (Test-Path macos-amd64) { Remove-Item macos-amd64 -Recurse -Force }
 
 release:
-    go build -o go-ssh-copy-id.exe -ldflags="-s -w -X main.version=1.0.0"
+    go build -o go-ssh-copy-id.exe -ldflags="-s -w -X main.version=1.0.1"
 
 
 build-macos:

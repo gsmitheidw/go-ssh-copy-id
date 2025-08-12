@@ -43,5 +43,5 @@ Options:
 
 ## Notes & Limitations
 
-* Doesn't check for duplicate keys
+* Checks for duplicate keys (v1.01)
 * Assumes remote hosts are unix/linux and conform to standard path for authorized_keys file

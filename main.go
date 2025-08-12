@@ -11,7 +11,7 @@ import (
 	"strings"
 )
 
-const version = "1.0.0"
+const version = "1.0.1"
 
 func main() {
 	// Flags
@@ -81,31 +81,38 @@ func main() {
 		os.Exit(1)
 	}
 
-	// clean carriage returns
-	keyData = []byte(strings.Replace(string(keyData), "\r", "", -1))
+	// clean carriage returns and trim spaces
+	pubKey := strings.TrimSpace(strings.ReplaceAll(string(keyData), "\r", ""))
+
+	// escape single quotes for safe remote shell
+	escapedKey := strings.ReplaceAll(pubKey, "'", "'\\''")
+
+	// remote command to create ~/.ssh, avoid duplicates, and set perms
+	remoteCmd := fmt.Sprintf(
+		"mkdir -p ~/.ssh && grep -qxF '%s' ~/.ssh/authorized_keys || echo '%s' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh",
+		escapedKey, escapedKey,
+	)
 
 	// ssh command
-	sshArgs := []string{userHost}
+	sshArgs := []string{}
 	if port != 22 {
-		sshArgs = append([]string{"-p", strconv.Itoa(port)}, sshArgs...)
+		sshArgs = append(sshArgs, "-p", strconv.Itoa(port))
 	}
-	sshArgs = append(sshArgs, "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys && chmod 700 ~/.ssh")
+	sshArgs = append(sshArgs, userHost, remoteCmd)
 
 	cmd := exec.Command("ssh", sshArgs...)
-	cmd.Stdin = strings.NewReader(string(keyData))
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	fmt.Println("Sending public key via single ssh session...")
+	fmt.Println("Sending public key via single ssh session (duplicates avoided)...")
 	if err := cmd.Run(); err != nil {
 		fmt.Println("SSH command failed:", err)
 		os.Exit(1)
 	}
 
-	fmt.Println("✅ Public key installed successfully.")
+	fmt.Println("✅ Public key installed successfully (no duplicates).")
 }
 
- 
 func fileExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil
@@ -123,12 +130,10 @@ func splitHostPort(input string) (string, int) {
 	return input, 0
 }
 
-
 func showVersion() {
 	fmt.Printf("go-ssh-copy-id version %s\n", version)
 }
 
- 
 func showHelp() {
 	fmt.Println("Usage: go-ssh-copy-id user@host[:port] [-i=\\path\\to\\key.pub] [-p=22]")
 	fmt.Println()
