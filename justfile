@@ -17,5 +17,6 @@ build-macos:
     New-Item -ItemType Directory -Force -Path "macos-amd64" > $null;
     $env:GOOS = "darwin"; $env:GOARCH = "amd64"; go build -o "macos-amd64/go-ssh-copy-id" -ldflags="-s -w" main.go
 
+# upx packing not recommended for distribution, local only - may be 'flase positive' flagged as malware. 
 pack:
     &.\upx.exe go-ssh-copy-id.exe
