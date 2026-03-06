@@ -45,3 +45,32 @@ Options:
 
 * Checks for duplicate keys (v1.01)
 * Assumes remote hosts are unix/linux and conform to standard path for authorized_keys file
+
+It is not possible in either this or in linux ssh-copy-id to directly install a public key to a remote host
+via JumpHost (aka Proxy ssh system). However this can be worked around with a port forward in another terminal temporarily
+by running something like this:
+
+
+```
+ssh -L 9022:127.0.0.1:22 -J jumphost user@target-system
+```
+
+That assumes jumphost is defined in your .ssh\config. Then use go-ssh-copy-id against the localhost temporary tunnel:
+
+
+```
+go-ssh-copy-id.exe -i .\.ssh\my-key user@127.0.0.1:9022 # where 127.0.0.1:9022 is really the target-system
+Sending public key via single ssh session...
+The authenticity of host '[127.0.0.1]:9022 ([127.0.0.1]:9022)' can't be established.
+ED25519 key fingerprint is SHA256:blah/blahblahblah
+This host key is known by the following other names/addresses:
+    C:\Users\localuser/.ssh/known_hosts:91: 192.168.123.456
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '[127.0.0.1]:9022' (ED25519) to the list of known hosts.
+user@127.0.0.1's password:
+✅ Public key installed successfully.
+
+```
+
+
+
